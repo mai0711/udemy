@@ -8,15 +8,22 @@ router.get("/", (req, res) => {
 
 // register User
 router.post("/register", async (req, res) => {
-    try{
-        const newUser = await new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-        });
-        const user = await newUser.save();
+    try {
+      //generate crypt password
+      // const salt = await bcrypt.genSalt(10);
+      // const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+      //create user
+    const newUser = await new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+    });
+
+      //save user
+    const user = await newUser.save();
         return res.status(200).json(user);
-    } catch(err) {
+    } catch (err) {
         return res.status(500).json(err);
     }
 });
