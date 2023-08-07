@@ -1,28 +1,33 @@
-import React, { useEffect, useState } from "react";
+//ホーム画面とプロフィール画面の投稿を表示する箇所
+
+import React, { useEffect, useState, useContext } from "react";
 import "./Timeline.css"
 import Share from '../share/Share'
 import Post from "../post/Post"
 import axios from "axios"
+import { AuthContext } from "../../state/AuthContext"
 
 
 export default function Timeline({username}) { //Profile.jsxからpropsで受け取る
 
   const [posts, setPosts] = useState([]);
+  const { user } = useContext(AuthContext);
 
-  // usernameが変わるたびに発火
+
+  // usernameかuser._idが変わるたびに発火
   useEffect(() => {
     const fetchPosts = async() => {
       const response =
       username
       //usernameがあるときはしたのapiを叩く
-      ? await axios.get(`/posts/profile/${username}`) //post.jsのget
+      ? await axios.get(`/posts/profile/${username}`) //post.jsの8. = プロフィールページの（自分の投稿のみ）
       //usernameがないときはしたのapiを叩く
-      : await axios.get("/posts/timeline/64c21350df0ba6d69be1e1ef") //post.jsのget
+      : await axios.get(`/posts/timeline/${user._id}`) //post.jsの9. = ホームの（自分の投稿とフォローしている人の投稿）
       // console.log(response);
       setPosts(response.data);
     };
     fetchPosts();
-  }, [username]);
+  }, [username, user._id]);
 
 
   return (

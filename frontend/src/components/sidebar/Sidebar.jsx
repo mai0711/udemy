@@ -1,3 +1,5 @@
+//画面左サイド
+
 import React from 'react'
 import "./Sidebar.css"
 import { Search, Person, Notifications, Home, MessageRounded, Bookmark, Settings } from "@mui/icons-material";

@@ -1,8 +1,10 @@
+//フレンズ表示
+
 import React from 'react'
 
 export default function CloseFriend({ user }) {
 
-  const PUBLIC_FOLDER = "http://localhost:3000/assets";
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER
 
   return (
         <li className="sidebarFriend">

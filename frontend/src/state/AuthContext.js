@@ -4,7 +4,18 @@ import AuthReducer from "./AuthReducer"
 
 //stateの初期値の状態
 const initialState = {
-    user: null,
+    // user: null,
+    user: {
+        _id: "64c22eac2659c42446f4036d",
+        username: "mai",
+        email: "mai@gmail.com",
+        password: "222222",
+        profilePicture: "https://assets.website-files.com/619e8d2e8bd4838a9340a810/647c106477f8934b266ba39c_profile-picture-og.webp",
+        coverPicture: "",
+        followers: [],
+        followings: ["64c21350df0ba6d69be1e1ef"],
+        isAdmin: false,
+    },
     isFetching: false,
     error: false,
 };

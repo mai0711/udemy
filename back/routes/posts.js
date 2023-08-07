@@ -3,7 +3,7 @@ const router = express.Router();
 const Post = require("../models/Post");
 const User = require("../models/User");
 
-//create a post
+//1.create a post
 router.post("/", async (req, res) => {
     const newPost = new Post(req.body)
     try{
@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-//update a post
+//2.update a post
 router.put("/:id", async(req, res) => { //id = post id
     try{
         const post = await Post.findById(req.params.id);
@@ -29,7 +29,7 @@ router.put("/:id", async(req, res) => { //id = post id
     }
 })
 
-//delete a post
+//3.delete a post
 router.delete("/:id", async(req, res) => { //id = post id
     try{
         const post = await Post.findById(req.params.id);
@@ -44,7 +44,7 @@ router.delete("/:id", async(req, res) => { //id = post id
     }
 });
 
-//like or dislike a post
+//4.like or dislike a post
 router.put("/:id/like", async(req, res) => { //id = post id
     try{
         const post = await Post.findById(req.params.id);
@@ -61,7 +61,7 @@ router.put("/:id/like", async(req, res) => { //id = post id
     }
 })
 
-//get a post
+//5.get a post
 router.get("/:id", async (req, res) => { //id = post id
     try{
         const post = await Post.findById(req.params.id); //post id
@@ -71,7 +71,7 @@ router.get("/:id", async (req, res) => { //id = post id
     }
 })
 
-//get all posts
+//6.get all posts
 router.get("/api/v1/allPosts", async(req, res) =>{
     try{
         const allPosts = await Post.find({});
@@ -81,7 +81,7 @@ router.get("/api/v1/allPosts", async(req, res) =>{
     }
 })
 
-//get only all of my posts
+//7.get only all of my posts
 router.get("/api/v1/allMyPosts", async(req, res) =>{
     try{
         //get all posts
@@ -98,7 +98,7 @@ router.get("/api/v1/allMyPosts", async(req, res) =>{
     }
 })
 
-//get all of my posts(profile page)
+//8.get all of my posts(profile page)
 router.get("/profile/:username", async (req, res) => {
     try{
         const user = await User.findOne({ username:req.params.username }); //1つのユーザー名から探すのでfindOne. findOneはプロパティが必要なのでusername:で指定
@@ -109,7 +109,7 @@ router.get("/profile/:username", async (req, res) => {
     }
 })
 
-//get all of following people's posts and my posts
+//9.get all of following people's posts and my posts
 router.get("/timeline/:userId", async (req, res) => {
     try{
         const currentUser = await User.findById(req.params.userId);

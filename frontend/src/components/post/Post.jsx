@@ -1,18 +1,23 @@
+//投稿記事１つずつ
+
 import  React  from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import "./Post.css";
 import { MoreVert } from "@mui/icons-material";
 import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../state/AuthContext"
 
 export default function Post({ post }) {
 
-    const PUBLIC_FOLDER = "http://localhost:3000/assets"
+    const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER
+
+    const { user: currentUser } = useContext(AuthContext); //ログインしているユーザー
 
     const [ like, setLike ] = useState(post.likes.length);
     const [ isLiked, setIsLiked ] = useState(false);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({}); //投稿したuser
 
   // post.userIdが変わるたびに以下が呼び出される
     useEffect(() => {
@@ -26,8 +31,13 @@ export default function Post({ post }) {
     }, [post.userId]);
 
 
-    //like button
-    const handleLike = () => {
+    //like function
+    const handleLike = async () => {
+        try{
+            await axios.put(`/posts/${post._id}/like`, {userId: currentUser._id }); //posts.jsの4
+        } catch(err){
+            console.log(err);
+        }
         setLike(isLiked ? like -1 : like +1);
         setIsLiked(!isLiked);
     };
@@ -39,7 +49,10 @@ export default function Post({ post }) {
                 <div className="postTopLeft">
                     <Link to={`/profile/${user.username}`} >
                     <img
-                    src={ user.profilePicture || PUBLIC_FOLDER + "/person/noAvatar.png"}
+                    src={
+                        user.profilePicture
+                        ? user.profilePicture
+                        : PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
                     alt=''
                     className='postProfileImg'
                     />
@@ -64,7 +77,7 @@ export default function Post({ post }) {
             <div className="postBottomLeft">
                 <img
                 className="likeIcon"
-                src={PUBLIC_FOLDER + "/heart.png"}
+                src={PUBLIC_FOLDER + "/assets/post/heart.png"}
                 alt=""
                 onClick={() => handleLike()}
                 />

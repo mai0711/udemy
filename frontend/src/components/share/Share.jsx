@@ -1,17 +1,27 @@
+//ホーム画面の投稿フォーム
+
 import React from 'react'
+import { useContext } from 'react';
 import "./Share.css"
 import { Image, Gif, Face, Analytics } from "@mui/icons-material";
+import { AuthContext } from "../../state/AuthContext"
+
 
 export default function Share() {
 
-  const PUBLIC_FOLDER = "http://localhost:3000/assets";
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER
+
+  const { user } = useContext(AuthContext);
 
   return (
     <div className='share'>
       <div className="shareWArapper">
         <div className="shareTop">
           <img
-          src={PUBLIC_FOLDER + "/person/noAvatar.png"}
+          src={
+            user.profilePicture
+            ? user.profilePicture
+            : PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
           alt=''
           className='shareProfileImg'
           />

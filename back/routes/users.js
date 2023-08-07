@@ -2,7 +2,19 @@ const express = require('express');
 const router = express.Router();
 const User = require("../models/User")
 
-//update user
+//1.get user
+// router.get("/:id", async(req, res) => {
+//     try{
+//         const user = await User.findById(req.params.id);
+//         const { password, updatedAt, ...other } = user._doc;  //get a user information except for password and updatedAt
+//         return res.status(200).json(other);
+//     }catch(err){
+//         return res.status(500).json(err)
+//     }
+// })
+
+
+//2.update user
 router.put("/:id", async (req, res) => { // :id = params.id
     if(req.body.userId === req.params.id || req.body.isAdmin){
         try{
@@ -19,7 +31,7 @@ router.put("/:id", async (req, res) => { // :id = params.id
     }
 });
 
-//delete user
+//3.delete user
 router.delete("/:id", async (req, res) => {
     if(req.body.userId === req.params.id || req.body.isAdmin){
         try{
@@ -34,18 +46,9 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
-//get user
-// router.get("/:id", async(req, res) => {
-//     try{
-//         const user = await User.findById(req.params.id);
-//         const { password, updatedAt, ...other } = user._doc;  //get a user information except for password and updatedAt
-//         return res.status(200).json(other);
-//     }catch(err){
-//         return res.status(500).json(err)
-//     }
-// })
 
-//クエリでユーザー情報を取得
+
+//4.クエリでユーザー情報を取得
 router.get("/", async(req, res) => {
     const userId = req.query.userId; //queryはurlを打ち込んだときの?以降の部分
     const username = req.query.username;
@@ -61,7 +64,7 @@ router.get("/", async(req, res) => {
 })
 
 
-//follow a user
+//5.follow a user
 router.put("/:id/follow", async (req, res) => { // :id = params.id
     if(req.body.userId !== req.params.id) { //req.body.userId = my id / req.params.id = someone's id
         try{
@@ -83,7 +86,7 @@ router.put("/:id/follow", async (req, res) => { // :id = params.id
     }
 })
 
-//unfollow a user
+//6.unfollow a user
 router.put("/:id/unfollow", async (req, res) => { // :id = params.id
     if(req.body.userId !== req.params.id) { //req.body.userId = my id / req.params.id = someone's id
         try{

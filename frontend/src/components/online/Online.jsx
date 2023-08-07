@@ -1,8 +1,10 @@
+//画面右サイド フレンズがオンラインしているか表す箇所
+
 import React from 'react'
 
 export default function Online({ user }) {
 
-  const PUBLIC_FOLDER = "http://localhost:3000/assets";
+  const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER
 
   return (
     <li className="rightbarFriend">
