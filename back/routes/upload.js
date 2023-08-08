@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
         cb(null, "public/images"); //画像を保存する場所
     },
     filename: (req, file, cb)=> {  //ファイル名
-        cb(null, file.originalname ); //req.body.name
+        cb(null, req.body.name ); //req.body.name = Share.jsxのdataのfileName
     },
 });
 

@@ -23,6 +23,21 @@ export default function Share() {
       userId: user._id, //誰が投稿するか（今ログインしているユーザー）
       description: desc.current.value, //inputで入力した文字
     };
+    if(file){
+      const data = new FormData();
+      const fileName = Date.now() + file.name; //Date.now()でファイルの名前が重複しないように
+      data.append("name", fileName); //""内はkey
+      data.append("file", file);
+      //fileNameとfileの情報をdataに入れ下のpostに渡す
+      newPost.img = fileName;
+      try{
+        //画像API
+        await axios.post("/upload", data); //upload.js
+      }catch(err){
+        console.log(err);
+      }
+    }
+
     //api
     try {
       await axios.post("/posts", newPost); //post.jsの1

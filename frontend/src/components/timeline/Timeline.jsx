@@ -23,8 +23,10 @@ export default function Timeline({username}) { //Profile.jsxからpropsで受け
       ? await axios.get(`/posts/profile/${username}`) //post.jsの8. = プロフィールページの（自分の投稿のみ）
       //usernameがないときはしたのapiを叩く
       : await axios.get(`/posts/timeline/${user._id}`) //post.jsの9. = ホームの（自分の投稿とフォローしている人の投稿）
-      // console.log(response);
-      setPosts(response.data);
+      // 投稿時間順に並べる
+      setPosts(response.data.sort((post1, post2) => {
+        return new Date(post2.createdAt) - new Date(post1.createdAt);
+      }));
     };
     fetchPosts();
   }, [username, user._id]);

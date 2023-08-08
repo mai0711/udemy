@@ -1,21 +1,21 @@
 //3,
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import AuthReducer from "./AuthReducer"
 
 //stateの初期値の状態
 const initialState = {
-    // user: null,
-    user: {
-        _id: "64c22eac2659c42446f4036d",
-        username: "mai",
-        email: "mai@gmail.com",
-        password: "222222",
-        profilePicture: "https://assets.website-files.com/619e8d2e8bd4838a9340a810/647c106477f8934b266ba39c_profile-picture-og.webp",
-        coverPicture: "",
-        followers: [],
-        followings: ["64c21350df0ba6d69be1e1ef"],
-        isAdmin: false,
-    },
+    user:JSON.parse(localStorage.getItem("user")) || null,
+    // user: {
+    //     _id: "64c22eac2659c42446f4036d",
+    //     username: "mai",
+    //     email: "mai@gmail.com",
+    //     password: "222222",
+    //     profilePicture: "https://assets.website-files.com/619e8d2e8bd4838a9340a810/647c106477f8934b266ba39c_profile-picture-og.webp",
+    //     coverPicture: "",
+    //     followers: [],
+    //     followings: ["64c21350df0ba6d69be1e1ef"],
+    //     isAdmin: false,
+    // },
     isFetching: false,
     error: false,
 };
@@ -29,6 +29,13 @@ export const AuthContextProvider = ({ children }) => {
     //initialState = 初期値のstateの内容
     //state = 新しいstateの内容(現在の状態)(AuthActions.js)ログイン始めたか、成功したか、エラーか
     //dispatch = どのactionを実行したかの通知
+
+    //store current user data in localStorage
+    useEffect(() => {
+        localStorage.setItem("user", JSON.stringify(state.user))
+    }, [state.user]);
+
+
     return(
         <AuthContext.Provider
         value={{ //value = 何を渡すか(どの情報を共有するか)
