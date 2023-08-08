@@ -1,6 +1,6 @@
 //ホーム画面の投稿フォーム
 
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import "./Share.css"
 import { Image, Gif, Face, Analytics } from "@mui/icons-material";
 import { AuthContext } from "../../state/AuthContext"
@@ -13,6 +13,9 @@ export default function Share() {
 
   const { user } = useContext(AuthContext);
   const desc = useRef()
+
+  const [ file, setFile ] = useState(null);
+  // console.log(file)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +40,7 @@ export default function Share() {
           src={
             user.profilePicture
             ? user.profilePicture
-            : PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
+            : PUBLIC_FOLDER + "person/noAvatar.png"}
           alt=''
           className='shareProfileImg'
           />
@@ -52,10 +55,19 @@ export default function Share() {
 
         <form className="shareButtons" onSubmit={(e) => handleSubmit(e)}>
           <div className="shareOptions">
-            <div className="shareOption">
+            <label className="shareOption" htmlFor='file'>
+              {/* labelにすることでImageやspanを押したときにinputと同じ機能にできる（htmlForとidを同じ名前に） */}
               <Image className="shareIcon" htmlColor='blue'/>
               <span className="shareOptionText">Picture</span>
-            </div>
+              <input
+              type='file'
+              id='file'
+              accept='.png, .jpeg, .jpg'
+              style={{display: "none"}}
+              onChange={(e) => setFile(e.target.files[0])}
+              />
+
+            </label>
             <div className="shareOption">
               <Gif className="shareIcon" htmlColor='hotpink' />
               <span className="shareOptionText">GIF</span>

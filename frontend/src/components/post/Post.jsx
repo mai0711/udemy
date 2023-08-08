@@ -52,7 +52,7 @@ export default function Post({ post }) {
                     src={
                         user.profilePicture
                         ? user.profilePicture
-                        : PUBLIC_FOLDER + "/assets/person/noAvatar.png"}
+                        : PUBLIC_FOLDER + "person/noAvatar.png"}
                     alt=''
                     className='postProfileImg'
                     />
@@ -77,7 +77,7 @@ export default function Post({ post }) {
             <div className="postBottomLeft">
                 <img
                 className="likeIcon"
-                src={PUBLIC_FOLDER + "/assets/post/heart.png"}
+                src={PUBLIC_FOLDER + "post/heart.png"}
                 alt=""
                 onClick={() => handleLike()}
                 />
