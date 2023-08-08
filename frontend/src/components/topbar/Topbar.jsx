@@ -9,6 +9,13 @@ export default function Topbar() {
     const { user } = useContext(AuthContext);
     const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER
 
+    //logout
+    const handleLogout = async () => {
+		localStorage.clear();
+		window.location.href = '/';
+	};
+
+
   return (
     <div className="topbarContainer">
         <div className="topbarLeft">
@@ -47,6 +54,9 @@ export default function Topbar() {
                         className="topbarImg"
                         />
                     </Link>
+                    <button href="/" onClick={handleLogout}>
+							Logout
+					</button>
                 </div>
         </div>
     </div>
